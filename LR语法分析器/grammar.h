@@ -7,7 +7,7 @@
 
 using namespace std;
 
-typedef string token;
+typedef string token;//符号类型
 
 struct production {		//产生式数据结构
 	token left;	//左侧非终结符
@@ -27,8 +27,8 @@ public:
 	map<token, map<token, bool>> follow_include;		//follow集的互相包含关系
 public:
 	grammar();		//默认构造函数，通过文件读入文法
-	void infer_epsilon(const token&);
-	void output_epsilon();
+	void infer_epsilon(const token&);//推导可推空符号
+	void output_epsilon();//计算可推空非终结符
 	void first_derivation(const token&);//对应非终结符first推导
 	void follow_derivation(const token&);//对应非终结符follow堆推导
 	void output_productions();//输出所有产生式
@@ -39,4 +39,4 @@ public:
 	void ini_productions_class();//初始化productions_class
 };
 
-extern grammar g;
+extern grammar g;//全局文法

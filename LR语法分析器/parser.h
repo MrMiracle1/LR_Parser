@@ -1,7 +1,7 @@
 #pragma once
 #include"grammar.h"
 #include"dfa.h"
-enum action_type
+enum action_type//动作枚举类型
 {
 	shift,
 	reduce,
@@ -18,14 +18,14 @@ struct action//动作表项
 class parser //LR(1)语法分析器类
 {
 public:
-	DFA dfa;
-	vector<map<token, action>> action_table;
-	vector<map<token, int>> goto_table;
-	vector<token> token_stream;
-	string action_name[3] = { "shift","reduce","acc" };
+	DFA dfa;//该分析器依据DFA
+	vector<map<token, action>> action_table;//action表格
+	vector<map<token, int>> goto_table;//goto表格
+	vector<token> token_stream;//字符流
+	string action_name[3] = { "shift","reduce","acc" };//动作名称数组
 public:
-	void input_token();
-	void table_derivation();
-	void output_parser_table();
-	void predict();
+	void input_token();//字符流导入
+	void table_derivation();//预测分析表创建
+	void output_parser_table();//打印分析表
+	void predict();//预测分析程序
 };

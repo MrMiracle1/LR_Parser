@@ -92,19 +92,25 @@ void parser::table_derivation()//预测分析表
 
 void parser::output_parser_table()
 {
-	cout << "action表" << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
-	cout << setiosflags(ios::left) << setw(10)<<" ";
+	cout << setiosflags(ios::left) << setw(10)<<" " << setw(80)<<"|action表"<<"|goto表"<< endl;
+	cout << "-------------------------------------------------------------------------------------------———————————————" << endl;
+	cout << setw(10)<<" "<<"|";
 	g.terminators.erase(find(g.terminators.begin(), g.terminators.end(), "ε"));
+	g.non_terminators.erase(find(g.non_terminators.begin(), g.non_terminators.end(), g.start_token));
 	for (token i : g.terminators)
 	{
 		cout << setw(10) <<i; 
 	}
+	cout << "|";
+	for (token i : g.non_terminators)
+	{
+		cout << setw(10) << i;
+	}
 	cout << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
+	cout << "-------------------------------------------------------------------------------------------———————————————" << endl;
 	for (int i=0 ; i<dfa.state_num;i++)
 	{
-		cout << setw(10) <<i;
+		cout << setw(10) <<i<<"|";
 		for (token j : g.terminators)
 		{
 			if (action_table[i].find(j) != action_table[i].end())
@@ -118,29 +124,15 @@ void parser::output_parser_table()
 			else
 				cout << setw(10) << "error" ;
 		}
-		cout << endl;
-	}
-	cout << "goto表" << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
-	cout << setiosflags(ios::left) << setw(10) << " ";
-	g.non_terminators.erase(find(g.non_terminators.begin(), g.non_terminators.end(), g.start_token));
-	for (token i : g.non_terminators)
-	{
-		cout << setw(10) << i;
-	}
-	cout << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
-	for (int i = 0; i < dfa.state_num;i++)
-	{
-		cout << setw(10) << i;
+		cout << "|";
 		for (token j : g.non_terminators)
 		{
 			if (goto_table[i].find(j) != goto_table[i].end())
 			{
-				cout << setw(10) <<goto_table[i][j];
+				cout << setw(10) << goto_table[i][j];
 			}
 			else
-				cout << setw(10) << "error" ;
+				cout << setw(10) << "error";
 		}
 		cout << endl;
 	}
@@ -155,10 +147,10 @@ void parser::predict()//预测分析函数
 	deque<pair<int,token>> parser_stack;
 	parser_stack.push_back({ 0,"_" });
 	cout << endl << "预测过程：" << endl;
-	cout << "-----------------------------------------------" << endl;
+	cout << "---------------------------------------------------------------------------------------------------------------" << endl;
 	cout << setiosflags(ios::left) << setw(10)<<"步骤"<<setw(30) << "状态栈"<<setw(30) << "字符栈"
 		<< setw(40) <<"输入" << setw(10) << "动作"<<endl;
-	cout << "-----------------------------------------------" << endl;
+	cout << "---------------------------------------------------------------------------------------------------------------" << endl;
 	vector<token>::iterator iter = token_stream.begin();
 	for (int step =1;iter != token_stream.end();step++)//遍历输入字符流
 	{
