@@ -35,7 +35,7 @@ void grammar::infer_epsilon(const token& non_terminator)
 		production current_production = productions[i];
 		for (const auto& j : current_production.right)//判断该产生式右侧第一个字符
 		{
-			if (j == non_terminator)//含自身的产生式无参考价值
+			if (j == non_terminator)
 				is_epsilon = false;
 			else if (find(terminators.begin(), terminators.end(), j) == terminators.end())//若为非终结符
 			{
@@ -46,9 +46,9 @@ void grammar::infer_epsilon(const token& non_terminator)
 				}
 				is_epsilon = is_epsilon || epsilon[j];//只有产生式均为不含自身非终结符且他们均可推空或直接推空，non_terminator才能推空
 			}
-			else if (j == "ε")//可推空
-				break;
-			else//终结符不可推空
+			else if (j == "n")
+				continue;
+			else
 				is_epsilon = false;
 			if (is_epsilon == false)
 				break;
